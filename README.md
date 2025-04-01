@@ -1,6 +1,13 @@
 # HOYO-NEXUS
 HOYO NEXUS tem a finalidade de facilitar o acesso a informações sobre os seguintes jogos: Genshin Impact, Honkai: Star Rail e Zenless Zone Zero.
 
+### Índice
+* [Download](https://github.com/zAeonDev/HOYO-NEXUS?tab=readme-ov-file#download)
+* [Versão](https://github.com/zAeonDev/HOYO-NEXUS?tab=readme-ov-file#vers%C3%A3o)
+* [Autores](https://github.com/zAeonDev/HOYO-NEXUS?tab=readme-ov-file#autores)
+* [Licença](https://github.com/zAeonDev/HOYO-NEXUS?tab=readme-ov-file#licen%C3%A7a)
+* [Área do Desenvolvedor](https://github.com/zAeonDev/HOYO-NEXUS?tab=readme-ov-file#%C3%A1rea-do-desenvolvedor)
+
 ## Download
 **Baixe a versão mais recente [clicando aqui](https://github.com/zAeonDev/HOYO-NEXUS/releases/tag/v1.0.0)!**
 * Para baixar o instalador, baixe o arquivo com o final **.exe**
