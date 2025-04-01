@@ -1,0 +1,49 @@
+{
+  "name": "nome-do-app",
+  "version": "1.0.0",
+  "description": "Nome do APP",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "publish": "dotenv -e .env -- electron-builder --publish=always"
+  },
+  "author": "Seu nome",
+  "license": "MIT",
+  "devDependencies": {
+    "dotenv-cli": "^8.0.0",
+    "electron": "^35.0.3",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "asar": true,
+    "appId": "nome-do-app",
+    "productName": "Nome do APP",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "package.json",
+      "icon.ico",
+      "src/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Seu nome de usuario do gihub",
+        "repo": "Nome-do-Repositório"
+      }
+    ]
+  },
+  "dependencies": {
+    "@ghostery/adblocker-electron": "^2.5.0",
+    "cross-fetch": "^4.1.0",
+    "electron-updater": "^6.3.9"
+  }
+}
