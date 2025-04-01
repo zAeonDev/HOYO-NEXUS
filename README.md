@@ -1,2 +1,108 @@
 # HOYO-NEXUS
 HOYO NEXUS tem a finalidade de facilitar o acesso a informações sobre os seguintes jogos: Genshin Impact, Honkai: Star Rail e Zenless Zone Zero.
+
+## Download
+**Baixe a versão mais recente [clicando aqui](https://github.com/zAeonDev/HOYO-NEXUS/releases/tag/v1.0.0)!**
+* Para baixar o instalador, baixe o arquivo com o final **.exe**
+
+## Versão
+Confira as tags [aqui](https://github.com/zAeonDev/HOYO-NEXUS/tags)!
+
+## Autores
+**Aeon** - *Trabalho Inicial*
+
+Entre em contato pelo Discord: **@zaeon_**
+
+## Licença
+Este projeto está sob a licença (MIT) - veja o arquivo [LICENSE](LICENSE) para detalhes.
+
+## Área do Desenvolvedor
+
+### Dependências
+```
+npm install electron --save-dev
+```
+```
+npm install electron-builder --save-dev
+```
+```
+npm install dotenv-cli --save-dev
+```
+```
+npm install @ghostery/adblocker-electron
+```
+```
+npm install cross-fetch
+```
+```
+npm install electron-updater
+```
+
+### Configuração do Package.json
+```
+{
+  "name": "nome-do-app",
+  "version": "1.0.0",
+  "description": "Nome do APP",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "publish": "dotenv -e .env -- electron-builder --publish=always"
+  },
+  "author": "Seu nome",
+  "license": "MIT",
+  "devDependencies": {
+    "dotenv-cli": "^8.0.0",
+    "electron": "^35.0.3",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "asar": true,
+    "appId": "nome-do-app",
+    "productName": "Nome do APP",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "package.json",
+      "icon.ico",
+      "src/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Seu nome de usuario do gihub",
+        "repo": "Nome-do-Repositório"
+      }
+    ]
+  },
+  "dependencies": {
+    "@ghostery/adblocker-electron": "^2.5.0",
+    "cross-fetch": "^4.1.0",
+    "electron-updater": "^6.3.9"
+  }
+}
+```
+
+### Comandos
+* **Inicia a depuração**
+```
+npm start
+```
+
+* **Compila o programa**
+```
+npm run dist
+```
+
+* **Publica a atualização no GitHub**
+```
+npm rum publish
+```
