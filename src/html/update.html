@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HOYO NEXUS</title>
+  <link rel="stylesheet" href="../css/update.css">
+</head>
+<body>
+  <!-- Vídeo do fundo -->
+  <video id="background-video" autoplay muted loop>
+    <source src="../images/background-video.mp4" type="video/mp4">
+  </video>
+
+  <!-- Conteúdo da atualização -->
+  <div class="update-container">
+    <div class="update-card">
+      <div class="update-header">
+        <h1>Atualização Disponível</h1>
+        <div id="update-status">
+          <div class="modern-spinner"></div>
+        </div>
+      </div>
+      <div class="update-progress">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="progress-info">
+          <span class="progress-text" id="progress-text">0%</span>
+          <span class="speed-indicator" id="speed-indicator"></span>
+          <span class="time-remaining" id="time-remaining"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../javascript/update.js"></script>
+</body>
+</html>

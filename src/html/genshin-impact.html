@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOYO NEXUS</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Vídeo de fundo -->
+    <div class="video-background">
+        <video autoplay muted loop id="bg-video">
+            <source src="../images/background-wallpaper-video.mp4" type="video/mp4">
+            Seu navegador não suporta vídeos HTML5.
+        </video>
+    </div>
+    <!-- Overlay para escurecer o vídeo -->
+    <div class="overlay"></div>
+
+    <!-- Conteúdo principal -->
+    <div class="main-container">
+        <!-- Menu -->
+        <nav class="nav-menu">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="./genshin-impact.html" class="nav-link active">Genshin Impact</a></li>
+                <li class="nav-item"><a href="./honkai-star-rail.html" class="nav-link">Honkai: Star Rail</a></li>
+                <li class="nav-item"><a href="./zenless-zone-zero.html" class="nav-link">Zenless Zone Zero</a></li>
+            </ul>
+        </nav>
+
+        <!-- Seção Links Oficiais -->
+        <section class="links-section">
+            <h2 class="section-title"><i class="fas fa-check-circle"></i> OFICIAL</h2>
+            <div class="buttons-container">
+                <a class="link-button" onclick="redirecionar('https://genshin.hoyoverse.com/pt/home')">
+                    <img src="../images/Genshin Impact.png" alt="Genshin Impact">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://www.hoyolab.com/circles/2/27/official?page_type=27&page_sort=events&utm_source=officialweb&utm_medium=toptoolbar&utm_id=2')">
+                    <img src="../images/HoYoLAB.png" alt="HoYoLAB">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://act.hoyolab.com/ys/app/interactive-map/index.html?bbs_presentation_style=no_header&utm_id=2&utm_medium=tool&utm_source=hoyolab&bbs_theme=dark&bbs_theme_device=1&lang=pt-pt#/map/2?shown_types=3&center=3875.61,-10325.61&zoom=-1.50')">
+                    <img src="../images/Mapa Interativo.png" alt="Mapa Interativo">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://act.hoyolab.com/ys/event/calculator-sea/index.html?bbs_presentation_style=fullscreen&bbs_auth_required=true&utm_source=hoyolab&utm_medium=tools&lang=pt-pt&bbs_theme=dark&bbs_theme_device=1#/')">
+                    <img src="../images/Calc. Aprimoramento.png" alt="Calculador de Aprimoramento">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://act.hoyolab.com/ys/event/signin-sea-v3/index.html?act_id=e202102251931481&hyl_auth_required=true&hyl_presentation_style=fullscreen&utm_source=hoyolab&utm_medium=tools&lang=pt-pt&bbs_theme=dark&bbs_theme_device=1')">
+                    <img src="../images/Check-in.png" alt="Check-in">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://genshin.hoyoverse.com/pt/gift')">
+                    <img src="../images/Código de Resgate.png" alt="Código de Resgate">
+                </a>
+            </div>
+        </section>
+
+        <!-- Seção Links Externos -->
+        <section class="links-section">
+            <h2 class="section-title"><i class="fas fa-external-link-alt"></i> EXTERNO</h2>
+            <div class="buttons-container">
+                <a class="link-button" onclick="redirecionar('https://enka.network/')">
+                    <img src="../images/Enka. Network.png" alt="Enka. Network">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://gensh.honeyhunterworld.com/?lang=PT')">
+                    <img src="../images/Honey Impact.png" alt="Honey Impact">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://keqingmains.com/')">
+                    <img src="../images/Keqing Mains.png" alt="Keqing Mains">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://www.reddit.com/r/Genshin_Impact_Leaks/')">
+                    <img src="../images/Reddit.png" alt="Genshin Leaks">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://frzyc.github.io/genshin-optimizer/#/characters')">
+                    <img src="../images/Genshin Optimizer.png" alt="Genshin Optimizer">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://akasha.cv/')">
+                    <img src="../images/Akasha System.png" alt="Akasha Sistem">
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <script src="../javascript/scripts.js"></script>
+</body>
+</html>

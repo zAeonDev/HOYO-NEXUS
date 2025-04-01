@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOYO NEXUS</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Vídeo de fundo -->
+    <div class="video-background">
+        <video autoplay muted loop id="bg-video">
+            <source src="../images/background-wallpaper-video.mp4" type="video/mp4">
+            Seu navegador não suporta vídeos HTML5.
+        </video>
+    </div>
+    <!-- Overlay para escurecer o vídeo -->
+    <div class="overlay"></div>
+
+    <!-- Conteúdo principal -->
+    <div class="main-container">
+        <!-- Menu -->
+        <nav class="nav-menu">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="./genshin-impact.html" class="nav-link">Genshin Impact</a></li>
+                <li class="nav-item"><a href="./honkai-star-rail.html" class="nav-link">Honkai: Star Rail</a></li>
+                <li class="nav-item"><a href="./zenless-zone-zero.html" class="nav-link active">Zenless Zone Zero</a></li>
+            </ul>
+        </nav>
+
+        <!-- Seção Links Oficiais -->
+        <section class="links-section">
+            <h2 class="section-title"><i class="fas fa-check-circle"></i> OFICIAL</h2>
+            <div class="buttons-container">
+                <a class="link-button" onclick="redirecionar('https://zenless.hoyoverse.com/pt-pt/main?utm_source=web&utm_medium=landingpage&utm_campaign=homebtn')">
+                    <img src="../images//Zenless Zone Zero.png" alt="Zenless Zone Zero">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://www.hoyolab.com/circles/8/46/feed?page_type=46&page_sort=hot')">
+                    <img src="../images/HoYoLAB.png" alt="HoYoLAB">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://act.hoyolab.com/bbs/event/signin/zzz/e202406031448091.html?act_id=e202406031448091&hyl_auth_required=true&hyl_presentation_style=fullscreen&utm_campaign=checkin&utm_id=8&utm_medium=tools&utm_source=hoyolab&lang=pt-pt&bbs_theme=dark&bbs_theme_device=1')">
+                    <img src="../images/ZZZ Check-in.png" alt="Check-in">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://zenless.hoyoverse.com/redemption')">
+                    <img src="../images/ZZZ Código de Resgate.png" alt="Código de Resgate">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://act.hoyolab.com/zzz/event/e20240601-guide-c0k2vt/index.html?game_biz=nap_global&utm_source=hoyolab&utm_medium=tools&utm_id=8&hyl_presentation_style=fullscreen&hyl_auth_required=true&hyl_hide_status_bar=true&lang=pt-pt&bbs_theme=dark&bbs_theme_device=1#/')">
+                    <img src="../images/Estação de Guias.png" alt="Estação de Guias">
+                </a>
+            </div>
+        </section>
+
+        <!-- Seção Links Externos -->
+        <section class="links-section">
+            <h2 class="section-title"><i class="fas fa-external-link-alt"></i> EXTERNO</h2>
+            <div class="buttons-container">
+                <a class="link-button">
+                    <img src="../images/engrenagens.gif" alt="Em Construção">
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <script src="../javascript/scripts.js"></script>
+</body>
+</html>

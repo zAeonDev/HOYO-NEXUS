@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOYO NEXUS</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Vídeo de fundo  -->
+    <div class="video-background">
+        <video autoplay muted loop id="bg-video">
+            <source src="../images/background-wallpaper-video.mp4" type="video/mp4">
+            Seu navegador não suporta vídeos HTML5.
+        </video>
+    </div>
+    <!-- Overlay para escurecer o vídeo -->
+    <div class="overlay"></div>
+
+    <!-- Conteúdo principal -->
+    <div class="main-container">
+        <!-- Menu -->
+        <nav class="nav-menu">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="./genshin-impact.html" class="nav-link">Genshin Impact</a></li>
+                <li class="nav-item"><a href="./honkai-star-rail.html" class="nav-link active">Honkai: Star Rail</a></li>
+                <li class="nav-item"><a href="./zenless-zone-zero.html" class="nav-link">Zenless Zone Zero</a></li>
+            </ul>
+        </nav>
+
+        <!-- Seção Links Oficiais -->
+        <section class="links-section">
+            <h2 class="section-title"><i class="fas fa-check-circle"></i> OFICIAL</h2>
+            <div class="buttons-container">
+                <a class="link-button" onclick="redirecionar('https://hsr.hoyoverse.com/pt-pt/home?utm_source=hsrofficialweb&utm_medium=fab&utm_campaign=logo')">
+                    <img src="../images/Honkai Star Rail.png" alt="Honkai: Star Rail">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://www.hoyolab.com/circles/6/42/feed?page_type=42&page_sort=hot')">
+                    <img src="../images/HoYoLAB.png" alt="HoYoLAB">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://act.hoyolab.com/sr/app/interactive-map/index.html?hyl_presentation_style=fullscreen&utm_campaign=map&utm_id=6&utm_medium=tools&utm_source=hoyolab&lang=pt-pt&bbs_theme=dark&bbs_theme_device=1#/map/38?zoom=&center=&origin_map_id=&shown_types=24,49,306,321,2,3,4,5,6,7,8,9,10,11,12,134,135,195,196,230,439,440,626')">
+                    <img src="../images/Honkai Mapa Interativo.png" alt="Mapa Interativo">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://act.hoyolab.com/sr/event/calculator/index.html?hyl_presentation_style=fullscreen&utm_campaign=calculator&utm_id=6&utm_medium=tools&utm_source=hoyolab&lang=pt-pt&bbs_theme=dark&bbs_theme_device=1#/home?target=Character')">
+                    <img src="../images/Honkai Calc. Aprimoramento.png" alt="Calculador de Aprimoramento">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://act.hoyolab.com/sr/event/gt-aio/divergent-universe/index.html?sign_type=2&auth_appid=rpgsimulator&authkey_ver=1&win_mode=fullscreen&mode=fullscreen&open_bbs=0&hyl_presentation_style=fullscreen&utm_source=hoyolab&utm_medium=tool&lang=pt-pt&bbs_theme=dark&bbs_theme_device=1#/lineup/feed/recommend')">
+                    <img src="../images/Universo Divergente.png" alt="Universo Divergente">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://act.hoyolab.com/bbs/event/signin/hkrpg/e202303301540311.html?act_id=e202303301540311&hyl_auth_required=true&hyl_presentation_style=fullscreen&utm_source=hoyolab&utm_medium=tools&utm_campaign=checkin&utm_id=6&lang=pt-pt&bbs_theme=dark&bbs_theme_device=1')">
+                    <img src="../images/Honkai Check-in.png" alt="Check-in">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://hsr.hoyoverse.com/gift')">
+                    <img src="../images/HSR Código de Resgate.png" alt="Código de Resgate">
+                </a>
+            </div>
+        </section>
+
+        <!-- Seção Links Externos -->
+        <section class="links-section">
+            <h2 class="section-title"><i class="fas fa-external-link-alt"></i> EXTERNO</h2>
+            <div class="buttons-container">
+                <a class="link-button" onclick="redirecionar('https://enka.network/?hsr')">
+                    <img src="../images/Enka. Network.png" alt="Enka. Network">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://starrail.honeyhunterworld.com/?lang=PT')">
+                    <img src="../images/HSR Honey Impact.png" alt="Honey Impact">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://hsr.keqingmains.com/')">
+                    <img src="../images/Keqing Mains.png" alt="Keqing Mains">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://www.reddit.com/r/HonkaiStarRail_leaks/')">
+                    <img src="../images/Reddit.png" alt="Honkai Leaks">
+                </a>
+                <a class="link-button" onclick="redirecionar('https://docs.google.com/spreadsheets/d/e/2PACX-1vRsm60jYo8MdHWimjvY42wE8-j-0NBwG9-KutpNcQbylhhBiKBpGmUm1x3CXExthl2EB438RdMWdeT3/pubhtml?gid=1012178313')">
+                    <img src="../images/HSR Optimizer.png" alt="Honkai Optimizer">
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <script src="../javascript/scripts.js"></script>
+</body>
+</html>

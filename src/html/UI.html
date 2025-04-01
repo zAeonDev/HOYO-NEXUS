@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOYO NEXUS</title>
+    <link rel="stylesheet" href="../css/UI.css">
+</head>
+<body>
+    <!-- Vídeo e Overlay -->
+    <div class="title-bar">
+        <video autoplay muted loop id="bgVideo" class="video-background">
+            <source src="../images/background-wallpaper-video.mp4" type="video/mp4">
+        </video>
+        
+        <!-- Overlay Escura -->
+        <div class="dark-overlay"></div>
+
+        <!-- Conteúdo da Barra -->
+        <div class="title-buttons left-buttons">
+            <button class="title-btn" id="settings">
+                <img src="../images/settings.png" alt="settings">
+            </button>
+            <button class="title-btn" id="patch-notes">
+                <img src="../images/Patch-Notes.png" alt="Patch Notes">
+            </button>
+            <button class="title-btn" id="home">
+                <img src="../images/home.png" alt="Home">
+            </button>
+            <button class="title-btn" id="back">
+                <img src="../images/back.png" alt="Voltar">
+            </button>
+            <button class="title-btn" id="forward">
+                <img src="../images/forward.png" alt="Avançar">
+            </button>
+            <button class="title-btn" id="reload">
+                <img src="../images/reload.png" alt="Recarregar">
+            </button>
+        </div>
+        
+        <div class="title-center">
+            <div class="animation-wrapper">
+                <div class="container-animation">
+                    <div class="gravitational-lens"></div>
+                    <img src="../images/Icone_Animado.png" class="image" alt="Black Hole">
+                    <img src="../images/Logo.png" class="logo" alt="HoYoverse Logo">
+                    <div class="logo-glow-overlay"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="title-buttons right-buttons">
+            <button class="title-btn" id="minimize">
+                <img src="../images/minimize.png" alt="Minimizar">
+            </button>
+            <button class="title-btn" id="maximize">
+                <img id="maximize-icon" src="../images/maximize.png" alt="Maximizar">
+            </button>
+            <button class="title-btn" id="close">
+                <img src="../images/close.png" alt="Fechar">
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const { ipcRenderer } = require("electron");
+        
+        document.getElementById("patch-notes").addEventListener("click", () => {
+            ipcRenderer.send("patch-note");
+        });
+
+        document.getElementById("home").addEventListener("click", () => {
+            ipcRenderer.send("go-home");
+        });
+        
+        document.getElementById("reload").addEventListener("click", () => {
+            ipcRenderer.send("reload-app");
+        });
+        
+        document.getElementById("back").addEventListener("click", () => {
+            ipcRenderer.send("go-back");
+        });
+        
+        document.getElementById("forward").addEventListener("click", () => {
+            ipcRenderer.send("go-forward");
+        });
+        
+        document.getElementById("minimize").addEventListener("click", () => {
+            ipcRenderer.send("minimize-app");
+        });
+        
+        document.getElementById("maximize").addEventListener("click", () => {
+            ipcRenderer.send("maximize-app");
+        });
+        
+        document.getElementById("close").addEventListener("click", () => {
+            ipcRenderer.send("close-app");
+        });
+    </script>
+</body>
+</html>
