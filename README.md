@@ -46,6 +46,11 @@ npm install electron-updater
 ```
 
 ### Configuração do Package.json
+* **Cria o package.json**
+```
+npm init --y
+```
+
 ```
 {
   "name": "nome-do-app",
