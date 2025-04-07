@@ -5,7 +5,6 @@
     font-family: 'Arial', sans-serif;
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar {
     width: 6px;
 }
@@ -30,7 +29,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Efeito do vídeo */
 .video-background {
     position: fixed;
     top: 0;
@@ -64,7 +62,6 @@ body {
     backdrop-filter: blur(20px);
 }
 
-/* Container principal */
 .main-container {
     width: 95%;
     max-width: 1200px;
@@ -73,7 +70,6 @@ body {
     animation: fadeIn 0.8s ease-out;
 }
 
-/* Menu */
 .nav-menu {
     display: flex;
     justify-content: center;
@@ -110,7 +106,6 @@ body {
     color: #ffe599;
 }
 
-/* Seções de links */
 .links-section {
     background: rgba(30, 35, 60, 0.3);
     backdrop-filter: blur(10px);
@@ -128,7 +123,6 @@ body {
     text-align: center;
 }
 
-/* Container de botões */
 .buttons-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, auto));
@@ -137,7 +131,6 @@ body {
     justify-content: center;
 }
 
-/* Botões de link */
 .link-button {
     display: flex;
     align-items: center;
@@ -163,13 +156,11 @@ body {
     filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.4));
 }
 
-/* Animações */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Ajustes para telas médias */
 @media (max-width: 992px) {
     .buttons-container {
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -182,7 +173,6 @@ body {
     }
 }
 
-/* Ajustes para tablets */
 @media (max-width: 768px) {
     .nav-list {
         flex-wrap: wrap;
@@ -211,7 +201,6 @@ body {
     }
 }
 
-/* Ajustes para smartphones */
 @media (max-width: 480px) {
     .nav-list {
         border-radius: 8px;

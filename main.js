@@ -3,11 +3,50 @@ const path = require("node:path");
 const { ElectronBlocker } = require("@ghostery/adblocker-electron");
 const fetch = require("cross-fetch");
 const { autoUpdater } = require("electron-updater");
+const fs = require("fs");
+
+const settingsPath = path.join(app.getPath("userData"), "settings.json");
+
+const loadSettings = () => {
+    try {
+        if (fs.existsSync(settingsPath)) {
+            const data = fs.readFileSync(settingsPath, "utf-8");
+            return JSON.parse(data);
+        } else {
+            const defaultSettings = { minimizeToTray: true, autoStart: false, startMaximized: true };
+            saveSettings(defaultSettings);
+            return defaultSettings;
+        }
+    } catch (error) {
+        console.error("Erro ao carregar configurações:", error);
+        return { minimizeToTray: true, autoStart: false, startMaximized: true }; // Valores padrão
+    }
+};
+
+const saveSettings = (settings) => {
+    try {
+        fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 4), "utf-8");
+    } catch (error) {
+        console.error("Erro ao salvar configurações:", error);
+    }
+};
+
+const settings = loadSettings();
+console.log("Configurações carregadas ao iniciar:", settings);
+
+let minimizeToTray = settings.minimizeToTray;
+let startMaximized = settings.startMaximized || false;
+
+app.setLoginItemSettings({
+    openAtLogin: settings.autoStart,
+    path: app.getPath("exe"),
+});
 
 let mainWindow;
 let view = null;
 let updateWindow;
 let tray = null;
+let mainWindowCreated = false; 
 
 const gotTheLock = app.requestSingleInstanceLock();
 
@@ -31,6 +70,9 @@ const adjustViewBounds = () => {
 };
 
 const createMainWindow = () => {
+    if (mainWindowCreated) return; 
+    mainWindowCreated = true;
+
     mainWindow = new BrowserWindow({
         width: 1050,
         height: 650,
@@ -65,7 +107,11 @@ const createMainWindow = () => {
             return { action: 'deny' };
         });
         view.webContents.loadURL(`file://${path.join(__dirname, "src", "html", "genshin-impact.html")}`);
-        mainWindow.maximize();
+
+        if (startMaximized) {
+            mainWindow.maximize();
+        }
+
         mainWindow.show();
     }).catch(err => {
         console.error("Falha ao carregar conteúdo:", err);
@@ -101,9 +147,12 @@ const setupTray = () => {
     tray.setContextMenu(contextMenu);
 
     mainWindow.on("close", (event) => {
-        if (!app.isQuiting) {
+        if (minimizeToTray && !app.isQuiting) {
             event.preventDefault();
             mainWindow.hide();
+        } else {
+            app.isQuiting = true;
+            app.quit();
         }
     });
 
@@ -131,12 +180,25 @@ const setupIpcHandlers = () => {
     });
 
     ipcMain.on("close-app", () => {
-        if (mainWindow && !mainWindow.isDestroyed()) mainWindow.hide();
+        if (mainWindow && !mainWindow.isDestroyed()) {
+            if (minimizeToTray) {
+                mainWindow.hide();
+            } else {
+                app.isQuiting = true;
+                app.quit();
+            }
+        }
     });
 
     ipcMain.on("reload-app", () => {
         if (view) {
             view.webContents.reload();
+        }
+    });
+
+    ipcMain.on("settings", () => {
+        if (view) {
+            view.webContents.loadURL(`file://${path.join(__dirname, "src", "html", "settings.html")}`);
         }
     });
 
@@ -164,6 +226,52 @@ const setupIpcHandlers = () => {
         }
     });
 
+    ipcMain.handle("set-auto-start", (event, shouldStart) => {
+        app.setLoginItemSettings({
+            openAtLogin: shouldStart,
+            path: app.getPath("exe"),
+        });
+        settings.autoStart = shouldStart;
+        saveSettings(settings);
+        return app.getLoginItemSettings().openAtLogin;
+    });
+    
+    ipcMain.handle("get-auto-start", () => {
+        return app.getLoginItemSettings().openAtLogin;
+    });
+
+    ipcMain.handle("set-tray-state", (event, state) => {
+        minimizeToTray = state;
+        settings.minimizeToTray = state;
+        saveSettings(settings);
+        return minimizeToTray;
+    });
+
+    ipcMain.handle("get-tray-state", () => {
+        return minimizeToTray;
+    });
+
+    ipcMain.handle("set-start-maximized", (event, state) => {
+        startMaximized = state;
+        settings.startMaximized = state;
+        saveSettings(settings);
+        return startMaximized;
+    });
+
+    ipcMain.handle("get-start-maximized", () => {
+        return startMaximized;
+    });
+
+    ipcMain.handle("check-for-updates", async () => {
+        try {
+            await autoUpdater.checkForUpdates();
+            return true;
+        } catch (error) {
+            console.error("Erro ao verificar atualizações:", error);
+            return false;
+        }
+    });
+
     mainWindow.on("maximize", adjustViewBounds);
     mainWindow.on("unmaximize", adjustViewBounds);
     mainWindow.on("resize", adjustViewBounds);
@@ -171,8 +279,8 @@ const setupIpcHandlers = () => {
 
 const createUpdateWindow = () => {
     updateWindow = new BrowserWindow({
-        width: 400,
-        height: 250,
+        width: 500,
+        height: 350,
         frame: false,
         alwaysOnTop: true,
         resizable: false,
@@ -194,26 +302,25 @@ const checkForUpdates = () => {
     console.log("🔍 Verificando atualizações...");
     autoUpdater.checkForUpdates().catch(err => {
         console.error("Erro ao verificar atualizações:", err);
-        createMainWindow(); // Se falhar, abre a janela principal
+        if (!mainWindowCreated) createMainWindow();
     });
 };
 
-// Configuração do Auto Updater
 autoUpdater.autoDownload = true;
 autoUpdater.allowPrerelease = true;
 autoUpdater.autoInstallOnAppQuit = true;
 autoUpdater.fullChangelog = true;
 autoUpdater.allowDowngrade = false;
 
-// Otimizações de rede
 app.commandLine.appendSwitch("enable-parallel-downloading");
 app.commandLine.appendSwitch("disable-http-cache");
 app.commandLine.appendSwitch("enable-tcp-fast-open");
 
-// Eventos do Auto Updater
 autoUpdater.on("update-available", () => {
     console.log("Nova atualização detectada! Baixando...");
-    createUpdateWindow();
+    if (!updateWindow || updateWindow.isDestroyed()) {
+        createUpdateWindow();
+    }
 });
 
 autoUpdater.on("download-progress", (progress) => {
@@ -237,28 +344,18 @@ autoUpdater.on("update-downloaded", () => {
 
 autoUpdater.on("update-not-available", () => {
     console.log("Nenhuma atualização disponível.");
-    createMainWindow();
+    if (!mainWindowCreated) createMainWindow();
 });
 
 autoUpdater.on("error", (error) => {
     console.error("Erro no auto updater:", error);
-    if (updateWindow && !updateWindow.isDestroyed()) {
-        updateWindow.webContents.send("update-error", error.message);
-    }
-    createMainWindow();
+    if (!mainWindowCreated) createMainWindow();
 });
 
 app.whenReady().then(async () => {
     const blocker = await ElectronBlocker.fromPrebuiltAdsAndTracking(fetch);
     blocker.enableBlockingInSession(session.defaultSession);
 
-    // Inicia o app ao ligar o PC
-    app.setLoginItemSettings({
-        openAtLogin: true, 
-        path: app.getPath("exe"),
-    });
-
-    // Verifica atualizações
     checkForUpdates();
 });
 

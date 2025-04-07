@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOYO NEXUS</title>
+    <link rel="stylesheet" href="../css/settings.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <video autoplay muted loop playsinline id="bg-video" class="video-background">
+        <source src="../images/background-wallpaper-video.mp4" type="video/mp4">
+        Seu navegador não suporta vídeos HTML5.
+    </video>
+    
+    <div class="overlay"></div>
+
+    <div class="main-container">
+        <header class="settings-header">
+            <h1>CONFIGURAÇÕES</h1>
+        </header>
+
+        <section class="settings-section">
+            <h2 class="section-title"><i class="fas fa-sliders-h"></i> GERAL</h2>
+            
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-name">Iniciar com o Windows</div>
+                    <div class="setting-description">Abre o aplicativo automaticamente ao ligar o computador</div>
+                </div>
+                <div class="setting-controls">
+                    <label class="switch">
+                        <input type="checkbox" id="autoStartToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-name">Bandeija do Windows</div>
+                    <div class="setting-description">Minimiza o aplicativo para a bandeija do Windows ao invés de fechar</div>
+                </div>
+                <div class="setting-controls">
+                    <label class="switch">
+                        <input type="checkbox" id="trayToggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-name">Iniciar Maximizado</div>
+                    <div class="setting-description">Inicia o aplicativo maximizado</div>
+                </div>
+                <div class="setting-controls">
+                    <label class="switch">
+                        <input type="checkbox" id="startMaximizedToggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <section class="settings-section">
+            <h2 class="section-title"><i class="fas fa-info-circle"></i> SOBRE</h2>
+            
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-name">Versão do Aplicativo</div>
+                    <div class="setting-description" id="version-number"></div>
+                </div>
+            </div>
+            
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-name">Verificar Atualizações</div>
+                    <div class="setting-description">Busca por novas versões do aplicativo</div>
+                </div>
+                <div class="setting-controls">
+                    <button class="btn" id="checkUpdatesButton">
+                        <i class="fas fa-sync-alt"></i> Verificar
+                    </button>
+                </div>
+            </div>
+            
+            <button class="btn btn-block" onclick="location.href='https://discord.gg/kfvWpBMADa'">
+                Ajuda e Suporte
+            </button>
+        </section>
+    </div>
+
+    <script>
+        window.addEventListener("DOMContentLoaded", async () => {
+            const toggle = document.getElementById("autoStartToggle");
+
+            const currentState = await window.electronAPI.getAutoStart();
+            toggle.checked = currentState;
+
+            toggle.addEventListener("change", async () => {
+                const newState = toggle.checked;
+                await window.electronAPI.setAutoStart(newState);
+            });
+
+            const trayToggle = document.getElementById("trayToggle");
+            const startMaximizedToggle = document.getElementById("startMaximizedToggle");
+
+            const currentTrayState = await window.electronAPI.getTrayState();
+            trayToggle.checked = currentTrayState;
+
+            trayToggle.addEventListener("change", async () => {
+                const newTrayState = trayToggle.checked;
+                await window.electronAPI.setTrayState(newTrayState);
+            });
+
+            const currentStartMaximizedState = await window.electronAPI.getStartMaximized();
+            startMaximizedToggle.checked = currentStartMaximizedState;
+
+            startMaximizedToggle.addEventListener("change", async () => {
+                const newState = startMaximizedToggle.checked;
+                await window.electronAPI.setStartMaximized(newState);
+            });
+
+            const checkUpdatesButton = document.getElementById("checkUpdatesButton");
+            checkUpdatesButton.addEventListener("click", async () => {
+                window.electronAPI.checkForUpdates();
+            });
+        });
+
+        async function loadVersion() {
+            try {
+                const response = await fetch('../../package.json');
+                if (!response.ok) {
+                    throw new Error('Não foi possível carregar o package.json');
+                }
+                const packageData = await response.json();
+                document.getElementById('version-number').textContent = `Versão ${packageData.version}`;
+            } catch (error) {
+                console.error('Erro ao carregar a versão:', error);
+                document.getElementById('version-number').textContent = 'Versão 1.0.0';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadVersion();
+        });
+ 
+        if (!window.fetch) {
+            document.getElementById('version-number').textContent = 'Versão 1.0.0';
+            console.warn('Seu navegador não suporta fetch API, usando versão padrão');
+        }
+    </script>
+    <script src="../javascript/scripts.js"></script>
+</body>
+</html>

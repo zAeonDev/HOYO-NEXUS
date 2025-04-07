@@ -28,7 +28,6 @@ body {
     border-bottom: 2px solid rgba(1, 9, 38, 0.8);
 }
 
-/* Video de Fundo */
 .title-bar .video-background {
     position: absolute;
     top: 0;
@@ -40,7 +39,6 @@ body {
     opacity: 1.0;
 }
 
-/* Overlay Escura */
 .title-bar .dark-overlay {
     position: absolute;
     top: 0;
@@ -151,7 +149,6 @@ body {
     transform: translate(-50%, -50%);
 }
 
-/* Animação da Logo */
 .container-animation .logo {
   position: absolute;
   top: 50%;

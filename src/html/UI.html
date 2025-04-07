@@ -7,16 +7,13 @@
     <link rel="stylesheet" href="../css/UI.css">
 </head>
 <body>
-    <!-- Vídeo e Overlay -->
     <div class="title-bar">
         <video autoplay muted loop id="bgVideo" class="video-background">
             <source src="../images/background-wallpaper-video.mp4" type="video/mp4">
         </video>
         
-        <!-- Overlay Escura -->
         <div class="dark-overlay"></div>
 
-        <!-- Conteúdo da Barra -->
         <div class="title-buttons left-buttons">
             <button class="title-btn" id="settings">
                 <img src="../images/settings.png" alt="settings">
@@ -65,6 +62,10 @@
     <script>
         const { ipcRenderer } = require("electron");
         
+        document.getElementById("settings").addEventListener("click", () => {
+            ipcRenderer.send("settings");
+        });
+
         document.getElementById("patch-notes").addEventListener("click", () => {
             ipcRenderer.send("patch-note");
         });

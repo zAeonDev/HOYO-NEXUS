@@ -9,19 +9,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- Vídeo de fundo -->
     <div class="video-container">
         <video autoplay muted loop playsinline id="bg-video" class="video-background">
             <source src="../images/background-wallpaper-video.mp4" type="video/mp4">
-            <source src="../images/background-wallpaper-video.webm" type="video/webm">
             Seu navegador não suporta vídeos HTML5.
         </video>
     </div>
     
-    <!-- Overlay para escurecer o vídeo -->
     <div class="overlay"></div>
 
-    <!-- Conteúdo principal -->
     <main class="main-container">
         <section class="main-section" aria-labelledby="patch-notes-title">
             <h1 id="patch-notes-title" class="section-title">
@@ -31,10 +27,9 @@
                 <article class="patch-notes-content">
                     <h2 id="version-number">Carregando versão...</h2>
                     <ul class="update-list">
-                        <li><i class="fas fa-check"></i>Design do Aplicativo <br>O design final foi implementado!</br></li>
-                        <li><i class="fas fa-check"></i>Botões dos links <br>Foi corrigido uma falha na qual impedia o funcionamento dos botões!</br> </li>
-                        <li><i class="fas fa-check"></i>Foi feita pequenas correções</li>
-                        <li><i class="fas fa-check"></i>Menu de configurações <br>Está indisponível, pois ainda não está pronto.</br></li>
+                        <li><i class="fas fa-check"></i>Design do Aplicativo <br>Correções e aprimoramentos</br></li>
+                        <li><i class="fas fa-check"></i>Configurações <br>Ás configurações foram implementadas!</br> </li>
+                        <li><i class="fas fa-check"></i>Adicionado um novo site para a aba do Honkai: Star Rail</li>
                     </ul>
                     <button class="back-button" onclick="window.history.back()">
                         <i class="fas fa-arrow-left"></i> Voltar
@@ -45,7 +40,6 @@
     </main>
 
     <script>
-        // Função para carregar a versão do package.json
         async function loadVersion() {
             try {
                 const response = await fetch('../../package.json');
@@ -60,12 +54,10 @@
             }
         }
 
-        // Inicialização quando o DOM estiver carregado
         document.addEventListener('DOMContentLoaded', () => {
             loadVersion();
         });
 
-        // Fallback para navegadores sem suporte a modules
         if (!window.fetch) {
             document.getElementById('version-number').textContent = 'Versão 1.0.0';
             console.warn('Seu navegador não suporta fetch API, usando versão padrão');
