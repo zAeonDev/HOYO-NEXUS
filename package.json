@@ -1,7 +1,7 @@
 {
-  "name": "hoyo-nexus",
-  "version": "1.0.1",
-  "description": "HOYO NEXUS",
+  "name": "nome-do-app",
+  "version": "1.0.0",
+  "description": "Nome do APP",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -9,7 +9,7 @@
     "dist": "electron-builder",
     "publish": "dotenv -e .env -- electron-builder --publish=always"
   },
-  "author": "Aeon",
+  "author": "Seu nome",
   "license": "MIT",
   "devDependencies": {
     "dotenv-cli": "^8.0.0",
@@ -18,8 +18,8 @@
   },
   "build": {
     "asar": true,
-    "appId": "hoyo-nexus",
-    "productName": "HOYO NEXUS",
+    "appId": "nome-do-app",
+    "productName": "Nome do APP",
     "directories": {
       "output": "dist"
     },
@@ -37,8 +37,8 @@
     "publish": [
       {
         "provider": "github",
-        "owner": "zAeonDev",
-        "repo": "HOYO-NEXUS"
+        "owner": "Seu nome de usuario do gihub",
+        "repo": "Nome-do-Repositório"
       }
     ]
   },
