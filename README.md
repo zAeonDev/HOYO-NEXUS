@@ -9,7 +9,7 @@ HOYO NEXUS tem a finalidade de facilitar o acesso a informações sobre os segui
 * [Área do Desenvolvedor](https://github.com/zAeonDev/HOYO-NEXUS?tab=readme-ov-file#%C3%A1rea-do-desenvolvedor)
 
 ## Download
-**Baixe a versão mais recente [clicando aqui](https://github.com/zAeonDev/HOYO-NEXUS/releases/tag/v1.0.0)!**
+**Baixe a versão mais recente [clicando aqui](https://github.com/zAeonDev/HOYO-NEXUS/releases/)!**
 * Para baixar o instalador, baixe o arquivo com o final **.exe**
 
 ## Versão
