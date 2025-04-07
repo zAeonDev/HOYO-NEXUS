@@ -81,6 +81,7 @@ npm init --y
       "main.js",
       "package.json",
       "icon.ico",
+      "settings.json",
       "src/**/*"
     ],
     "win": {
