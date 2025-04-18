@@ -4,6 +4,7 @@ const { ElectronBlocker } = require("@ghostery/adblocker-electron");
 const fetch = require("cross-fetch");
 const { autoUpdater } = require("electron-updater");
 const fs = require("fs");
+const { Client } = require('discord-rpc');
 
 const settingsPath = path.join(app.getPath("userData"), "settings.json");
 
@@ -360,3 +361,30 @@ app.whenReady().then(async () => {
 });
 
 app.commandLine.appendSwitch("ignore-certificate-errors", "true");
+
+const clientId = 'id do seu cliente';
+
+const rpc = new Client({ transport: 'ipc' });
+
+rpc.on('ready', () => {
+    console.log('Rich Presence conectado ao Discord!');
+    rpc.setActivity({
+        details: 'Explorando o HoYo Nexus',
+        startTimestamp: Date.now(),
+        largeImageKey: 'icone_grande',
+        largeImageText: 'HoYo Nexus',
+        smallImageKey: 'icone_pequeno',
+        smallImageText: 'Atualizando...',
+        instance: false,
+        buttons: [
+            {
+                label: 'Download',
+                url: 'https://github.com/zAeonDev/HOYO-NEXUS?tab=readme-ov-file#download'
+            }
+        ]
+    }).then(() => {
+        console.log('Rich Presence configurado com sucesso!');
+    }).catch(console.error);
+});
+
+rpc.login({ clientId }).catch(console.error);
