@@ -44,6 +44,9 @@ npm install cross-fetch
 ```
 npm install electron-updater
 ```
+```
+npm install discord-rpc
+```
 
 ### Configuração do Package.json
 * **Cria o package.json**
@@ -99,6 +102,7 @@ npm init --y
   "dependencies": {
     "@ghostery/adblocker-electron": "^2.5.0",
     "cross-fetch": "^4.1.0",
+    "discord-rpc": "^4.0.1",
     "electron-updater": "^6.3.9"
   }
 }
