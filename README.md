@@ -18,7 +18,7 @@ Confira as tags [aqui](https://github.com/zAeonDev/HOYO-NEXUS/tags)!
 ## Autores
 **Aeon** - *Trabalho Inicial*
 
-Entre em contato pelo Discord: **@zaeon_**
+Entre em contato [clicando aqui](https://discord.gg/AKX84d8x3q)!
 
 ## Licença
 Este projeto está sob a licença (MIT) - veja o arquivo [LICENSE](LICENSE) para detalhes.
