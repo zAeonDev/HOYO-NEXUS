@@ -1,5 +1,7 @@
 {
     "minimizeToTray": true,
     "autoStart": false,
-    "startMaximized": true
+    "startMaximized": true,
+    "enableRichPresence": true,
+    "enableAdBlock": true
 }

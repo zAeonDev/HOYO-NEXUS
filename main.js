@@ -1,4 +1,4 @@
-const { app, BrowserWindow, BrowserView, ipcMain, session, Tray, Menu } = require("electron");
+const { app, BrowserWindow, BrowserView, ipcMain, session, Tray, Menu, globalShortcut } = require("electron");
 const path = require("node:path");
 const { ElectronBlocker } = require("@ghostery/adblocker-electron");
 const fetch = require("cross-fetch");
@@ -14,13 +14,25 @@ const loadSettings = () => {
             const data = fs.readFileSync(settingsPath, "utf-8");
             return JSON.parse(data);
         } else {
-            const defaultSettings = { minimizeToTray: true, autoStart: false, startMaximized: true };
+            const defaultSettings = { 
+                minimizeToTray: true, 
+                autoStart: false, 
+                startMaximized: true, 
+                enableRichPresence: true,
+                enableAdBlock: true
+            };
             saveSettings(defaultSettings);
             return defaultSettings;
         }
     } catch (error) {
         console.error("Erro ao carregar configurações:", error);
-        return { minimizeToTray: true, autoStart: false, startMaximized: true }; // Valores padrão
+        return { 
+            minimizeToTray: true, 
+            autoStart: false, 
+            startMaximized: true, 
+            enableRichPresence: true,
+            enableAdBlock: true
+        };
     }
 };
 
@@ -273,6 +285,65 @@ const setupIpcHandlers = () => {
         }
     });
 
+    ipcMain.handle("set-rich-presence", (event, state) => {
+        settings.enableRichPresence = state;
+        saveSettings(settings);
+
+        if (state) {
+            startRichPresence();
+        } else {
+            stopRichPresence();
+        }
+
+        return settings.enableRichPresence;
+    });
+
+    ipcMain.handle("get-rich-presence", () => {
+        return settings.enableRichPresence;
+    });
+
+    ipcMain.handle("set-adblock", async (event, state) => {
+        settings.enableAdBlock = state;
+        saveSettings(settings);
+        await setupAdBlocker();
+        return settings.enableAdBlock;
+    });
+
+    ipcMain.handle("get-adblock", () => {
+        return settings.enableAdBlock;
+    });
+
+    ipcMain.handle("clear-cache", async () => {
+        try {
+            await session.defaultSession.clearCache();
+
+            await session.defaultSession.clearStorageData({
+                storages: [
+                    "appcache",
+                    "cookies",
+                    "filesystem",
+                    "indexdb",
+                    "localstorage",
+                    "shadercache",
+                    "websql",
+                    "serviceworkers",
+                ],
+            });
+
+            console.log("Cache e dados de armazenamento limpos com sucesso!");
+            return true;
+        } catch (error) {
+            console.error("Erro ao limpar o cache e dados de armazenamento:", error);
+            return false;
+        }
+    });
+
+    ipcMain.on("restart-app", () => {
+        console.log("Reiniciando o aplicativo...");
+        app.relaunch();
+        app.exit(0);
+    });
+
     mainWindow.on("maximize", adjustViewBounds);
     mainWindow.on("unmaximize", adjustViewBounds);
     mainWindow.on("resize", adjustViewBounds);
@@ -353,38 +424,80 @@ autoUpdater.on("error", (error) => {
     if (!mainWindowCreated) createMainWindow();
 });
 
-app.whenReady().then(async () => {
-    const blocker = await ElectronBlocker.fromPrebuiltAdsAndTracking(fetch);
-    blocker.enableBlockingInSession(session.defaultSession);
+let adBlocker = null;
 
+const setupAdBlocker = async () => {
+    if (settings.enableAdBlock) {
+        adBlocker = await ElectronBlocker.fromPrebuiltAdsAndTracking(fetch);
+        adBlocker.enableBlockingInSession(session.defaultSession);
+        console.log("AdBlock ativado.");
+    } else if (adBlocker) {
+        adBlocker.disableBlockingInSession(session.defaultSession);
+        adBlocker = null;
+        console.log("AdBlock desativado.");
+    }
+};
+
+app.whenReady().then(async () => {
+    await setupAdBlocker();
     checkForUpdates();
+
+    globalShortcut.register("Control+G", () => {
+        if (view && !view.webContents.isDestroyed()) {
+            view.webContents.loadURL("https://www.google.com");
+            console.log("Atalho Ctrl + G acionado: carregando Google.");
+        }
+    });
 });
 
 app.commandLine.appendSwitch("ignore-certificate-errors", "true");
 
-const clientId = 'id do seu cliente';
+const clientId = 'id do seu cliente'; // Substitua pelo seu Client ID do Discord
 
-const rpc = new Client({ transport: 'ipc' });
+let rpc = null;
 
-rpc.on('ready', () => {
-    console.log('Rich Presence conectado ao Discord!');
-    rpc.setActivity({
-        details: 'Explorando o HoYo Nexus',
-        startTimestamp: Date.now(),
-        largeImageKey: 'icone_grande',
-        largeImageText: 'HoYo Nexus',
-        smallImageKey: 'icone_pequeno',
-        smallImageText: 'Atualizando...',
-        instance: false,
-        buttons: [
-            {
-                label: 'Download',
-                url: 'https://github.com/zAeonDev/HOYO-NEXUS?tab=readme-ov-file#download'
-            }
-        ]
-    }).then(() => {
-        console.log('Rich Presence configurado com sucesso!');
-    }).catch(console.error);
+const startRichPresence = () => {
+    if (rpc) return;
+
+    rpc = new Client({ transport: 'ipc' });
+
+    rpc.on('ready', () => {
+        console.log('Rich Presence conectado ao Discord!');
+        rpc.setActivity({
+            details: 'Tenha acesso rápido e fácil a informações sobre os seguintes jogos: Genshin Impact, Honkai: Star Rail e Zenless Zone Zero.',
+            startTimestamp: Date.now(),
+            largeImageKey: 'icone_grande',
+            largeImageText: 'HoYo Nexus',
+            smallImageKey: 'icone_pequeno',
+            smallImageText: 'Atualizando...',
+            instance: false,
+            buttons: [
+                {
+                    label: 'Download',
+                    url: 'https://github.com/zAeonDev/HOYO-NEXUS?tab=readme-ov-file#download'
+                }
+            ]
+        }).then(() => {
+            console.log('Rich Presence configurado com sucesso!');
+        }).catch(console.error);
+    });
+
+    rpc.login({ clientId }).catch(console.error);
+};
+
+const stopRichPresence = () => {
+    if (rpc) {
+        rpc.destroy();
+        rpc = null;
+        console.log('Rich Presence desconectado.');
+    }
+};
+
+if (settings.enableRichPresence) {
+    startRichPresence();
+}
+
+app.on("will-quit", () => {
+    globalShortcut.unregisterAll();
+    console.log("Todos os atalhos globais foram desregistrados.");
 });
-
-rpc.login({ clientId }).catch(console.error);

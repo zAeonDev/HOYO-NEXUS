@@ -7,6 +7,12 @@ contextBridge.exposeInMainWorld("electronAPI", {
   getTrayState: () => ipcRenderer.invoke("get-tray-state"),
   setStartMaximized: (state) => ipcRenderer.invoke("set-start-maximized", state),
   getStartMaximized: () => ipcRenderer.invoke("get-start-maximized"),
+  setRichPresence: (state) => ipcRenderer.invoke("set-rich-presence", state),
+  getRichPresence: () => ipcRenderer.invoke("get-rich-presence"),
+  setAdBlock: (state) => ipcRenderer.invoke("set-adblock", state),
+  getAdBlock: () => ipcRenderer.invoke("get-adblock"),
+  clearCache: () => ipcRenderer.invoke("clear-cache"),
+  restartApp: () => ipcRenderer.send("restart-app"),
   checkForUpdates: () => ipcRenderer.invoke("check-for-updates"),
   verElectron: () => process.versions.electron,
 });

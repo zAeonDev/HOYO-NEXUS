@@ -64,6 +64,56 @@
                     </label>
                 </div>
             </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-name">Atividade do Discord</div>
+                    <div class="setting-description">Quando ativado exibe o aplicativo nas atividades do Discord</div>
+                </div>
+                <div class="setting-controls">
+                    <label class="switch">
+                        <input type="checkbox" id="richPresenceToggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-name">Bloqueador de Anúncios</div>
+                    <div class="setting-description">Ativa ou desativa o bloqueador de anúncios</div>
+                </div>
+                <div class="setting-controls">
+                    <label class="switch">
+                        <input type="checkbox" id="adBlockToggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-name">Limpar Cache</div>
+                    <div class="setting-description">Remove os dados temporários armazenados pelo aplicativo</div>
+                </div>
+                <div class="setting-controls">
+                    <button class="btn" id="clearCacheButton">
+                        <i class="fas fa-trash-alt"></i> Limpar
+                    </button>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-name">Reiniciar</div>
+                    <div class="setting-description">Reinicia o aplicativo</div>
+                </div>
+                <div class="setting-controls">
+                    <button class="btn" id="restartAppButton">
+                        <i class="fas fa-sync-alt"></i> Reiniciar
+                    </button>
+                </div>
+            </div>
         </section>
 
         <section class="settings-section">
@@ -88,10 +138,20 @@
                 </div>
             </div>
             
-            <button class="btn btn-block" onclick="location.href='https://discord.gg/kfvWpBMADa'">
+            <button class="btn btn-block" onclick="location.href='https://discord.com/invite/AKX84d8x3q'">
                 Ajuda e Suporte
             </button>
         </section>
+    </div>
+
+    <!-- Modal de Aviso -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeModal">&times;</span>
+            <h2 id="modalTitle">Aviso</h2>
+            <p id="modalMessage">Mensagem do aviso.</p>
+            <button class="btn" id="modalConfirmButton">OK</button>
+        </div>
     </div>
 
     <script>
@@ -125,9 +185,48 @@
                 await window.electronAPI.setStartMaximized(newState);
             });
 
+            const richPresenceToggle = document.getElementById("richPresenceToggle");
+
+            const currentRichPresenceState = await window.electronAPI.getRichPresence();
+            richPresenceToggle.checked = currentRichPresenceState;
+
+            richPresenceToggle.addEventListener("change", async () => {
+                const newState = richPresenceToggle.checked;
+                await window.electronAPI.setRichPresence(newState);
+            });
+
+            const adBlockToggle = document.getElementById("adBlockToggle");
+
+            const currentAdBlockState = await window.electronAPI.getAdBlock();
+            adBlockToggle.checked = currentAdBlockState;
+
+            adBlockToggle.addEventListener("change", async () => {
+            const newState = adBlockToggle.checked;
+                await window.electronAPI.setAdBlock(newState);
+            });
+
             const checkUpdatesButton = document.getElementById("checkUpdatesButton");
             checkUpdatesButton.addEventListener("click", async () => {
-                window.electronAPI.checkForUpdates();
+                const hasUpdate = await window.electronAPI.checkForUpdates();
+                if (!hasUpdate) {
+                    showModal(
+                        "Atualizações",
+                        "Você já está na versão mais recente.",
+                        () => {
+                            console.log("Modal de atualização exibido.");
+                        }
+                    );
+                }
+            });
+
+            const clearCacheButton = document.getElementById("clearCacheButton");
+            clearCacheButton.addEventListener("click", async () => {
+                window.electronAPI.clearCache();
+            });
+
+            const restartAppButton = document.getElementById("restartAppButton");
+            restartAppButton.addEventListener("click", () => {
+                window.electronAPI.restartApp();
             });
         });
 
@@ -153,6 +252,38 @@
             document.getElementById('version-number').textContent = 'Versão 1.0.0';
             console.warn('Seu navegador não suporta fetch API, usando versão padrão');
         }
+
+        function showModal(title, message, callback) {
+            const modal = document.getElementById("customModal");
+            const modalTitle = document.getElementById("modalTitle");
+            const modalMessage = document.getElementById("modalMessage");
+            const modalConfirmButton = document.getElementById("modalConfirmButton");
+
+            modalTitle.textContent = title;
+            modalMessage.textContent = message;
+
+            modal.style.display = "block";
+
+            const closeModal = () => {
+                modal.style.display = "none";
+                if (callback) callback();
+            };
+
+            document.getElementById("closeModal").onclick = closeModal;
+            modalConfirmButton.onclick = closeModal;
+
+            window.onclick = (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            };
+        }
+
+        document.getElementById("clearCacheButton").addEventListener("click", () => {
+            showModal("Limpar Cache", "O cache foi limpo com sucesso!", () => {
+                console.log("Cache limpo!");
+            });
+        });
     </script>
     <script src="../javascript/scripts.js"></script>
 </body>
